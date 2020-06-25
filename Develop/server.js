@@ -1,13 +1,14 @@
 //REFERENCE ACTIVITY 11.14 & 11.15
 
 //Set up Dependencies
-var path = require("path");
-var express = require("express");
+const path = require("path");
+const express = require("express");
+const fs = require(fs);
 
 //set up port
-var PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8080;
 
-var app = express();
+const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -31,7 +32,7 @@ app.get("/api/notes", function (req, res) {
 app.post("/api/notes", function (req, res) {
   // req.body hosts is equal to the JSON post sent from the user
   // This works because of our body parsing middleware
-  var newNote = req.body;
+  const newNote = req.body;
 
   console.log(newNote);
 
