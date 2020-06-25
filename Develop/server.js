@@ -20,6 +20,6 @@ app.get("*", function (req, res) {
 });
 
 //listener will start the server
-server.listen(PORT, function () {
+app.listen(PORT, function () {
   console.log("Server listening on: http://localhost:" + PORT);
 });
