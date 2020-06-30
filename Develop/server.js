@@ -1,46 +1,34 @@
 //REFERENCE ACTIVITY 11.14 & 11.15
 
 //Set up Dependencies
-const path = require("path");
-const express = require("express");
-const fs = require("fs");
 
-//set up port
-var PORT = process.env.PORT || 3000;
-
+var express = require("express");
+var bodyParser = require("body-parser");
+var fs = require("fs");
+var path = require("path");
 var app = express();
-
-app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
+app.use(express.urlencoded({ extended: true }));
+var Port = process.env.Port || 3000;
 app.use(express.static("public"));
 
-//HTML GET Routes
-
+//GET function
+app.get("/notes", function (req, res) {
+  res.sendFile(__dirname + "/public/notes.html");
+});
+app.get("/api/notes", function (req, res) {
+  res.sendFile(__dirname + "/db/db.json");
+});
 app.get("/*", function (req, res) {
   res.sendFile(__dirname + "/public/index.html");
 });
 
-app.get("/notes", function (req, res) {
-  res.sendFile(__dirname + "/public/notes.html");
-});
-
-//API Routes
-
-//GET `/api/notes` - Should read the `db.json` file and return all saved notes as JSON.
-app.get("/api/notes", function (req, res) {
-  res.sendFile(__dirname + "/db/db.json");
-});
-
-//POST `/api/notes` - Should receive a new note to save on the request body, add it to the `db.json` file, and then return the new note to the client.
+//API post function
 app.post("/api/notes", function (req, res) {
-  // req.body hosts is equal to the JSON post sent from the user
-  // This works because of our body parsing middleware
   var newNote = {
     title: req.body.title,
     text: req.body.text,
   };
-
   var notes = JSON.parse(fs.readFileSync(__dirname + "/db/db.json"));
   newNote.id = notes.length;
   notes.push(newNote);
@@ -49,6 +37,8 @@ app.post("/api/notes", function (req, res) {
 
   res.json(notes);
 });
+
+//DELETE Function
 
 app.delete("/api/notes/:id", function (req, res) {
   var noteId = req.params.id;
@@ -68,7 +58,7 @@ app.delete("/api/notes/:id", function (req, res) {
   res.json(notes);
 });
 
-//listener will start the server
-app.listen(PORT, function () {
-  console.log("Server listening on: http://localhost:" + PORT);
+//listens starts the server
+app.listen(Port, function () {
+  console.log("App listening on Port" + Port);
 });
