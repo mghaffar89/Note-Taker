@@ -24,7 +24,9 @@ Please insure you have all the tools to run node on your terminal. It is recomme
 
 https://nodejs.org/en/download/
 
-# Useage
+# Usage
+
+For users that need to keep track of a lot of information, it's easy to forget or be unable to recall something important. Being able to take persistent notes allows users to have written information available when needed.
 
 # License
 
