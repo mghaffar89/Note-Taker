@@ -6,9 +6,9 @@ const express = require("express");
 const fs = require("fs");
 
 //set up port
-const PORT = process.env.PORT || 3000;
+var PORT = process.env.PORT || 3000;
 
-const app = express();
+var app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -36,12 +36,12 @@ app.get("/api/notes", function (req, res) {
 app.post("/api/notes", function (req, res) {
   // req.body hosts is equal to the JSON post sent from the user
   // This works because of our body parsing middleware
-  const newNote = {
+  var newNote = {
     title: req.body.title,
     text: req.body.text,
   };
 
-  const notes = JSON.parse(fs.readFileSync(__dirname + "/db/db.json"));
+  var notes = JSON.parse(fs.readFileSync(__dirname + "/db/db.json"));
   newNote.id = notes.length;
   notes.push(newNote);
 
@@ -51,10 +51,10 @@ app.post("/api/notes", function (req, res) {
 });
 
 app.delete("/api/notes/:id", function (req, res) {
-  const noteId = req.params.id;
+  var noteId = req.params.id;
   console.log(noteId);
 
-  const notes = JSON.parse(fs.readFileSync(__dirname + "/db/db.json"));
+  var notes = JSON.parse(fs.readFileSync(__dirname + "/db/db.json"));
   notes = notes.filter(function (note, index) {
     if (noteId == index) {
       return false;
