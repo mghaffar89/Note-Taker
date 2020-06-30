@@ -6,31 +6,30 @@ const express = require("express");
 const fs = require("fs");
 
 //set up port
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3000;
 
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.static(__dirname, "public"));
+
+app.use(express.static("public"));
 
 //HTML GET Routes
 
-app.get("*", function (req, res) {
-  res.sendFile(path.join(__dirname, "./public/index.html"));
+app.get("/*", function (req, res) {
+  res.sendFile(__dirname + "/public/index.html");
 });
 
 app.get("/notes", function (req, res) {
-  res.sendFile(path.join(__dirname, "./public/notes.html"));
+  res.sendFile(__dirname + "/public/notes.html");
 });
 
 //API Routes
 
-let notesData = [];
-
 //GET `/api/notes` - Should read the `db.json` file and return all saved notes as JSON.
 app.get("/api/notes", function (req, res) {
-  res.sendFile(path.join(__dirname, "./db/db.json"));
+  res.sendFile(__dirname + "/db/db.json");
 });
 
 //POST `/api/notes` - Should receive a new note to save on the request body, add it to the `db.json` file, and then return the new note to the client.
@@ -42,18 +41,20 @@ app.post("/api/notes", function (req, res) {
     text: req.body.text,
   };
 
-  const notes = JSON.parse(fs.readFileSync(__dirname + "./db/db.json"));
+  const notes = JSON.parse(fs.readFileSync(__dirname + "/db/db.json"));
+  newNote.id = notes.length;
   notes.push(newNote);
 
-  fs.writeFileSync(__dirname + "./db/db.json", JSON.stringify(notes));
+  fs.writeFileSync(__dirname + "/db/db.json", JSON.stringify(notes));
 
   res.json(notes);
 });
 
 app.delete("/api/notes/:id", function (req, res) {
   const noteId = req.params.id;
+  console.log(noteId);
 
-  let notes = JSON.parse(fs.readFileSync(__dirname + "./db/db.json"));
+  const notes = JSON.parse(fs.readFileSync(__dirname + "/db/db.json"));
   notes = notes.filter(function (note, index) {
     if (noteId == index) {
       return false;
@@ -62,7 +63,7 @@ app.delete("/api/notes/:id", function (req, res) {
     return true;
   });
 
-  fs.writeFileSync(__dirname + "./db/db.json", JSON.stringify(notes));
+  fs.writeFileSync(__dirname + "/db/db.json", JSON.stringify(notes));
 
   res.json(notes);
 });
