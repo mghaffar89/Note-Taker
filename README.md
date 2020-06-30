@@ -9,14 +9,14 @@ Notetaker creates, saves, edits, and deletes notes. It uses express backend to r
 
 # Technologies & Tools Used
 
-Express
-npm package
-jQuery
-Bootstrap
-Javascript
-node js
-html
-css
+- Express
+- Npm package
+- JQuery
+- Bootstrap
+- Javascript
+- Node js
+- Html
+- Css
 
 # Installation
 
