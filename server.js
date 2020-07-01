@@ -9,7 +9,7 @@ var path = require("path");
 var app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-var Port = process.env.Port || 3000;
+var PORT = process.env.PORT || 3000;
 app.use(express.static("public"));
 
 //GET function
@@ -59,6 +59,6 @@ app.delete("/api/notes/:id", function (req, res) {
 });
 
 //listener starts the server
-app.listen(Port, function () {
-  console.log("App listening on Port" + Port);
+app.listen(PORT, function () {
+  console.log("App listening on Port" + PORT);
 });
